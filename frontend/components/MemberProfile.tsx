@@ -6,6 +6,8 @@ import {
   TypographyP,
 } from "@/components/ui/typography";
 import { BUILDINGS, BUILDING_ACRONYMS } from "@/utils/constants";
+import React, { useState, useEffect } from "react";
+import Image from 'next/image';
 
 import "@/styles/MemberProfile.css";
 
@@ -14,6 +16,7 @@ interface IProps {
 }
 
 export default function MemberProfile({ ...props }: IProps) {
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   const member = props.member["member-info"];
   const name = member.firstname + " " + member.lastname;
   const officeBuildingAcronym = member["office-building"] as BUILDING_ACRONYMS;
@@ -21,10 +24,18 @@ export default function MemberProfile({ ...props }: IProps) {
 
   return (
     <div className="member-profile">
-      <img
+      <Image
         className="m-2 rounded-sm"
+        alt={"Image of " + name}
         src={`https://clerk.house.gov/images/members/${member.bioguideID}.jpg`}
+        onLoad={() => setImageLoaded(true)}
+        width={200}
+        height={250}
       />
+
+      {/* TODO: Add skeleton placeholder for image as it loads */}
+      {imageLoaded ? null : <div>Loading...</div>}
+
       <div className="ml-4 flex flex-col gap-3">
         <div className="flex flex-row items-end gap-10 mb-4">
           <TypographyH1 className="">{name}</TypographyH1>

@@ -6,3 +6,5 @@ export const BUILDINGS = {
   "RHOB":"Rayburn House Office Building"} as const;
 
 export type BUILDING_ACRONYMS = keyof typeof BUILDINGS;
+
+export const PAGE_LEN = 20;

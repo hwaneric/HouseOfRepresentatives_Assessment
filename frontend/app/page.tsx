@@ -19,9 +19,6 @@ export default async function App() {
   // console.log(data)
   return (
     <main className="main-container">
-      <header>
-        <h1>LCS Programming Exercise</h1>
-      </header>
       <MemberList members={members} />
     </main>
   );

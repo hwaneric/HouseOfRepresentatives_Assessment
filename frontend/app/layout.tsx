@@ -1,3 +1,4 @@
+import Header from "@/components/Header"
 
 export const metadata = {
   title: 'LCS Programming Exercise',
@@ -11,7 +12,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      
+      <body>
+        <Header/>
+        {children}
+      </body>
     </html>
   )
 }
