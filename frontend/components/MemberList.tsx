@@ -73,6 +73,7 @@ export default function MemberList({ ...props }: IProps) {
           getMemberName(member) && <MemberProfile key={member.statedistrict} member={member} />
         )
       )}
+      
       {/* {curPageMembers.map(
         (member: any) => (
           // Display member profile if member name is not empty

@@ -8,8 +8,10 @@ import {
 import { BUILDINGS, BUILDING_ACRONYMS } from "@/utils/constants";
 import React, { useState, useEffect } from "react";
 import Image from 'next/image';
+import { WeekView } from "react-weekview";
 
 import "@/styles/MemberProfile.css";
+import Calendar from "./MemberCalendar";
 
 interface IProps {
   member: Record<string, any>;
@@ -37,7 +39,7 @@ export default function MemberProfile({ ...props }: IProps) {
       {imageLoaded ? null : <div>Loading...</div>}
 
       <div className="ml-4 flex flex-col gap-3">
-        <div className="flex flex-row items-end gap-10 mb-4">
+        <div className="flex flex-row items-end gap-10">
           <TypographyH1 className="">{name}</TypographyH1>
 
           <TypographyH3>{member.state["state-fullname"]}</TypographyH3>
@@ -50,12 +52,15 @@ export default function MemberProfile({ ...props }: IProps) {
           Office Building: {officeBuilding}
         </TypographyH4>
 
-        {/* <TypographyH4 className="">Office Building: {member["office-building"]}</TypographyH4> */}
         <TypographyH4 className="">
           Office Room: {member["office-room"]}
         </TypographyH4>
         <TypographyH4 className="">Phone: {member.phone}</TypographyH4>
       </div>
+      
+      {/* TODO Add Calendar */}
+      
+
     </div>
   );
 }
