@@ -5,7 +5,7 @@ import { MEMBER_API } from "./constants";
  * @returns {Promise<Record<string, any>}
  */
 export const fetchMemberData = async (): Promise<Record<string, any>>  => {
-  const res = await fetch(MEMBER_API);
+  const res = await fetch(MEMBER_API as string);
 
   if (!res.ok) {
     throw new Error('Unable to fetch member data');
@@ -29,6 +29,18 @@ export const getMembers = (data: Record<string, any>): Record<string, any>[] => 
 }
 
 /**
+ * Parses Member data and returns a member's info
+ * @param member - API response
+ * @returns {Record<string ,any>}
+ */
+export const getMemberInfo = (member: Record<string, any>): Record<string, any> => {
+  // Remove any members with empty names
+  const members = member?.["member-info"];
+
+  return members || {};
+}
+
+/**
  * Parses Member data and returns the member's name
  * @param member
  * @returns {string}
@@ -46,6 +58,11 @@ export const getMemberOfficialName = (member: Record<string, any>): string => {
   return member?.['member-info']['official-name'] || '';
 };
 
+/**
+ * Parses Member data and returns the member's state
+ * @param member
+ * @returns {string}
+ */
 export const getMemberState = (member: Record<string, any>): string => {
   return member?.['member-info']?.state['state-fullname'] || '';
 };
@@ -57,8 +74,8 @@ export const getMemberState = (member: Record<string, any>): string => {
  * @returns {number}
  */
 export const sortAlphabetically = (a: Record<string, any>, b: Record<string, any>) => {
-  const nameA = a["member-info"]["sort-name"];
-  const nameB = b["member-info"]["sort-name"];
+  const nameA = a?.["member-info"]["sort-name"];
+  const nameB = b?.["member-info"]["sort-name"];
   
   if (nameA < nameB) return -1;
   if (nameA > nameB) return 1;
@@ -67,7 +84,7 @@ export const sortAlphabetically = (a: Record<string, any>, b: Record<string, any
 }
 
 /**
- * Filters members by name and state using a search query
+ * Filter helper function that matches members by name and state given a search query
  * @param member
   * @param searchQuery
  * @returns {boolean}

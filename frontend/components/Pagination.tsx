@@ -13,7 +13,6 @@ interface IProps {
 
 export default function MemberList({ ...props }: IProps) {
   const { numMembers, curPageIndex, setCurPageIndex } = props;
-  console.log(numMembers, curPageIndex)
   const [pageArray, setPageArray] = useState<(number | string)[]>([]);
 
   // Define page buttons to display
@@ -42,13 +41,13 @@ export default function MemberList({ ...props }: IProps) {
 
     // Remove duplicates and sort
     const uniqueIndexes = Array.from(new Set(validIndexes)).sort((a, b) => a - b);
-    console.log(uniqueIndexes)
   
     // Build out final array to display
     const finalArray: (number | string)[] = []; 
     for (let i = 0; i < uniqueIndexes.length; i++) {
+      // Add "..." if there is a gap between page numbers
       if (i > 0 && uniqueIndexes[i] !== uniqueIndexes[i - 1] + 1) {
-        finalArray.push("..."); // Add "..." if there is a gap between page numbers
+        finalArray.push("..."); 
       } 
       finalArray.push(uniqueIndexes[i]);
     }
@@ -84,15 +83,17 @@ export default function MemberList({ ...props }: IProps) {
           
           // Page is not current page
           return (
-            <Button className="h-8 w-8 rounded-full bg-white text-slate-800 hover:bg-slate-300" key={index} onClick={() => setCurPageIndex(page as number - 1)}>
+            <Button 
+              className="h-8 w-8 rounded-full bg-white text-slate-800 hover:bg-slate-300" 
+              key={index} 
+              onClick={() => setCurPageIndex(page as number - 1)}
+            >
               {page}
             </Button>
           )
         } 
         )}
       </div>
-
     </div>
-     
   );
 }

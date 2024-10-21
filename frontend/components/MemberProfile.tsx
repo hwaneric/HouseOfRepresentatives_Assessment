@@ -1,17 +1,14 @@
 import {
   TypographyH1,
-  TypographyH2,
   TypographyH3,
   TypographyH4,
-  TypographyP,
 } from "@/components/ui/typography";
 import { BUILDINGS, BUILDING_ACRONYMS } from "@/utils/constants";
-import React, { useState, useEffect } from "react";
-import Image from 'next/image';
-import { WeekView } from "react-weekview";
+import React, { useState } from "react";
+import Image from "next/image";
 
 import "@/styles/MemberProfile.css";
-import Calendar from "./MemberCalendar";
+import { getMemberInfo } from "@/utils/helpers";
 
 interface IProps {
   member: Record<string, any>;
@@ -19,17 +16,23 @@ interface IProps {
 
 export default function MemberProfile({ ...props }: IProps) {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-  const member = props.member["member-info"];
-  const name = member.firstname + " " + member.lastname;
-  const officeBuildingAcronym = member["office-building"] as BUILDING_ACRONYMS;
-  const officeBuilding = BUILDINGS[officeBuildingAcronym];
+  const member = getMemberInfo(props.member);
+  const name = member?.firstname + " " + member?.lastname;
+  const officeBuildingAcronym = member?.[
+    "office-building"
+  ] as BUILDING_ACRONYMS;
+  const officeBuilding = BUILDINGS?.[officeBuildingAcronym];
+
+  if (!member) {
+    return null;
+  }
 
   return (
     <div className="member-profile">
       <Image
         className="m-2 rounded-sm"
         alt={"Image of " + name}
-        src={`https://clerk.house.gov/images/members/${member.bioguideID}.jpg`}
+        src={`https://clerk.house.gov/images/members/${member?.bioguideID}.jpg`}
         onLoad={() => setImageLoaded(true)}
         width={200}
         height={250}
@@ -57,10 +60,8 @@ export default function MemberProfile({ ...props }: IProps) {
         </TypographyH4>
         <TypographyH4 className="">Phone: {member.phone}</TypographyH4>
       </div>
-      
-      {/* TODO Add Calendar */}
-      
 
+      {/* TODO Add Calendar */}
     </div>
   );
 }

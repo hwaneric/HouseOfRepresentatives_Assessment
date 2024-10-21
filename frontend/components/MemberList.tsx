@@ -1,10 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from "react";
-import { getMembers, getMemberName, sortAlphabetically, getMemberOfficialName, filterBySearchQuery } from "@/utils/helpers";
+import { getMemberName, sortAlphabetically, getMemberOfficialName, filterBySearchQuery } from "@/utils/helpers";
 import { PAGE_LEN } from "@/utils/constants";
 import MemberProfile from "@/components/MemberProfile";
-import { TypographyP } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 
 import "@/styles/MemberList.css";
@@ -16,7 +15,6 @@ interface IProps {
 }
 
 export default function MemberList({ ...props }: IProps) {
-  const [curPageMembers, setCurPageMembers] = useState<Record<string, any>[]>([]);
   const [curPageIndex, setCurPageIndex] = useState<number>(0);
   const [isAlphabeticalSort, setIsAlphabeticalSort] = useState<boolean>(true);
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -29,7 +27,6 @@ export default function MemberList({ ...props }: IProps) {
     const sortedMembers = [...filteredMembers].sort(
       (a, b) => isAlphabeticalSort ? sortAlphabetically(a, b) : -1 * sortAlphabetically(a, b)
     )
-    console.log(sortedMembers);
     setFilteredMembers(sortedMembers);
   }, [isAlphabeticalSort]);
 
@@ -62,7 +59,7 @@ export default function MemberList({ ...props }: IProps) {
           onChange={(e) => setSearchQuery(e.target.value)} 
           placeholder="Search"
         />
-        <Button className="" onClick={() => setIsAlphabeticalSort(!isAlphabeticalSort)}>
+        <Button onClick={() => setIsAlphabeticalSort(!isAlphabeticalSort)}>
           {isAlphabeticalSort ? "A-Z" : "Z-A"}
         </Button>
       </div>
@@ -74,12 +71,6 @@ export default function MemberList({ ...props }: IProps) {
         )
       )}
       
-      {/* {curPageMembers.map(
-        (member: any) => (
-          // Display member profile if member name is not empty
-          getMemberName(member) && <MemberProfile key={member.statedistrict} member={member} />
-        )
-      )} */}
       <div className="mb-6">
         <Pagination  numMembers={filteredMembers.length} curPageIndex={curPageIndex} setCurPageIndex={setCurPageIndex}/>
       </div>
