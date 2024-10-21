@@ -57,7 +57,7 @@ export default function MemberList({ ...props }: IProps) {
         <Input 
           className="w-1/4 border-slate-500" 
           onChange={(e) => setSearchQuery(e.target.value)} 
-          placeholder="Search"
+          placeholder="Search by Name or State"
         />
         <Button onClick={() => setIsAlphabeticalSort(!isAlphabeticalSort)}>
           {isAlphabeticalSort ? "A-Z" : "Z-A"}
